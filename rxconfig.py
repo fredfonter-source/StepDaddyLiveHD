@@ -1,16 +1,18 @@
-import reflex as rx
 import os
+import reflex as rx
 
+# Safe defaults
+PROXY_CONTENT = os.getenv("PROXY_CONTENT", "FALSE").upper() == "TRUE"
+SOCKS5 = os.getenv("SOCKS5", "")
 
-proxy_content = os.environ.get("PROXY_CONTENT", "TRUE").upper() == "TRUE"
-socks5 = os.environ.get("SOCKS5", "")
-
-print(f"PROXY_CONTENT: {proxy_content}\nSOCKS5: {socks5}")
+# Cloud URL fallback (no trailing slash)
+API_URL = os.getenv("API_URL", "https://stepdaddylivehd-teal-moon.reflex.run")
 
 config = rx.Config(
     app_name="StepDaddyLiveHD",
-    proxy_content=proxy_content,
-    socks5=socks5,
+    api_url=API_URL,                # <-- IMPORTANT: tell frontend where the API lives
+    proxy_content=PROXY_CONTENT,    # default FALSE for safe testing
+    socks5=SOCKS5,
     show_built_with_reflex=False,
     plugins=[
         rx.plugins.SitemapPlugin(),
