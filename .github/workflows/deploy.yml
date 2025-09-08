@@ -1,0 +1,17 @@
+name: Deploy Reflex App
+on:
+  push:
+    branches: [ master ]   # <- use master since your branch is master
+  workflow_dispatch: {}
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: reflex-dev/reflex-deploy-action@v2
+        with:
+          auth_token: ${{ secrets.REFLEX_AUTH_TOKEN }}
+          project_id: ${{ secrets.REFLEX_PROJECT_ID }}
+          python_version: "3.12"
+          # If rxconfig.py is in a subfolder, add:
+          # app_directory: "subfolder-name"
